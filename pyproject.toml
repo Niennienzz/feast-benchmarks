@@ -1,0 +1,14 @@
+[project]
+name = "feast-benchmarks"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.11.13"
+dependencies = [
+    "feast[redis]==0.51.0",
+    "numpy>=2.3.2",
+    "pandas>=2.3.2",
+    "parquet-tools>=0.2.16",
+    "pyarrow==17.0.0",
+    "six>=1.17.0",
+]

@@ -14,7 +14,7 @@ trap "exit" INT
 single_run() {
 	echo "Entity rows: $1; Features: $2; Concurrency: $3; RPS: $4"
 
-	python3 request_generator.py \
+	uv run request_generator.py \
 		--endpoint ${TARGET} \
 		--num-ports ${NUM_SERVERS} \
 		--entity-rows $1 \
@@ -30,26 +30,32 @@ single_run() {
 }
 
 # single_run <entities> <features> <concurrency> <rps>
+single_run 10 50 5 10
 
+#echo "Change only number of rows"
+#
+#single_run 1 50 $CONCURRENCY 10
+#
+#for i in $(seq 10 10 100); do single_run $i 50 $CONCURRENCY 10; done
 
-echo "Change only number of rows"
+#echo "Change only number of rows"
+#
+#single_run 1 50 $CONCURRENCY 10
+#
+#for i in $(seq 10 10 100); do single_run $i 50 $CONCURRENCY 10; done
+#
+#
+#echo "Change only number of features"
+#
+#for i in $(seq 50 50 250); do single_run 1 $i $CONCURRENCY 10; done
+#
+#
+#echo "Change only number of requests"
+#
+#for i in $(seq 10 10 100); do single_run 1 50 $CONCURRENCY $i; done
+#
+#for i in $(seq 10 10 100); do single_run 1 250 $CONCURRENCY $i; done
+#
+#for i in $(seq 10 10 100); do single_run 100 50 $CONCURRENCY $i; done
 
-single_run 1 50 $CONCURRENCY 10
-
-for i in $(seq 10 10 100); do single_run $i 50 $CONCURRENCY 10; done
-
-
-echo "Change only number of features"
-
-for i in $(seq 50 50 250); do single_run 1 $i $CONCURRENCY 10; done
-
-
-echo "Change only number of requests"
-
-for i in $(seq 10 10 100); do single_run 1 50 $CONCURRENCY $i; done
-
-for i in $(seq 10 10 100); do single_run 1 250 $CONCURRENCY $i; done
-
-for i in $(seq 10 10 100); do single_run 100 50 $CONCURRENCY $i; done
-
-for i in $(seq 10 10 100); do single_run 100 250 $CONCURRENCY $i; done
+#for i in $(seq 10 10 100); do single_run 100 250 $CONCURRENCY $i; done

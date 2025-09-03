@@ -7,4 +7,4 @@ online_store:
 offline_store:
   type: file
 go_feature_retrieval: True
-entity_key_serialization_version: 2
+entity_key_serialization_version: 3
