@@ -3,6 +3,8 @@ project: feature_repo
 provider: local
 online_store:
   type: redis
-  connection_string: localhost:16379
+  connection_string: localhost:6379
 offline_store:
   type: file
+go_feature_retrieval: True
+entity_key_serialization_version: 3

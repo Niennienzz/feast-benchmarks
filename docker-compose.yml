@@ -1,0 +1,27 @@
+services:
+  feast:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "6566-6581:6566"
+    deploy:
+      replicas: 16
+    links:
+      - redis
+  redis:
+    image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
+    command:
+      - "--proactor_threads"
+      - "2"
+      - "--cache_mode"
+      - "true"
+      - "--maxmemory"
+      - "2g"
+    ulimits:
+      memlock: -1
+    ports:
+      - "6379:6379"
+    volumes:
+      - dragonflydata:/data
+volumes:
+  dragonflydata:

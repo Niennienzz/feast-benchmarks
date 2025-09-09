@@ -5,18 +5,20 @@ import base64
 
 
 @click.command()
-@click.option('--endpoint', default='http://127.0.0.1', help='Feature Server endpoint')
-@click.option('--num-ports', default=1, help='Number of endpoint ports starting from 6566, 6567, ...')
+@click.option('--endpoints', multiple=True, help='Feature server endpoints')
 @click.option('--features', default=250, help='Number of features')
 @click.option('--entity-rows', default=1, help='Number of rows per request')
 @click.option('--entity-keyspace', default=10**4, help='Entities range')
 @click.option('--requests', default=10**3, help='Number of requests')
 @click.option('--output', default='requests.json')
-def generate_requests(endpoint, num_ports, features, entity_rows, entity_keyspace, requests, output):
+def generate_requests(endpoints, features, entity_rows, entity_keyspace, requests, output):
     vegeta_requests = []
 
     if features not in (50, 100, 150, 200, 250):
         raise ValueError("Number of features must be divisible one of (50, 100, 150, 200, 250)")
+
+    if len(endpoints) < 1:
+        raise ValueError("At least one endpoint must be provided")
 
     feature_service = f"feature_service_{features // 50 - 1}"
 
@@ -29,7 +31,7 @@ def generate_requests(endpoint, num_ports, features, entity_rows, entity_keyspac
         }
         vegeta_request = {
             "method": "POST",
-            "url": f"{endpoint}:{6566+idx%num_ports}/get-online-features",
+            "url": f"{endpoints[idx%len(endpoints)]}/get-online-features",
             "body": base64.encodebytes(json.dumps(feast_request).encode()).decode()
         }
 

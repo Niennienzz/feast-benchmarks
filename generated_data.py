@@ -1,9 +1,9 @@
 import datetime
-import pyarrow as pa
-import pyarrow.parquet as pq
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pyarrow as pa
 from pathlib import Path
+
 
 def generate_data(num_rows: int, num_features: int, key_space: int) -> pd.DataFrame:
     features = [f"feature_{i}" for i in range(num_features)]
@@ -14,6 +14,7 @@ def generate_data(num_rows: int, num_features: int, key_space: int) -> pd.DataFr
         df[column] = np.random.randint(1, key_space, num_rows)
     return df
 
+
 if __name__ == "__main__":
-    df = generate_data(10**4, 250, 10**4)
-    df.to_parquet(Path(__file__).parent / "generated_data.parquet")
+    df = generate_data(10 ** 4, 250, 10 ** 4)
+    df.to_parquet(Path(__file__).parent / "data/generated_data.parquet")
